@@ -97,7 +97,7 @@ func (s *toDoServiceServer) Read(ctx context.Context, req *v1.ReadRequest) (*v1.
 	defer c.Close()
 
 	// query ToDo by ID
-	rows, err := c.QueryContext(ctx, "SELECT `Title`, `Description`, `Reminder` FROM ToDo WHERE `ID`=?",
+	rows, err := c.QueryContext(ctx, "SELECT `ID`, `Title`, `Description`, `Reminder` FROM ToDo WHERE `ID`=?",
 		req.Id)
 	if err != nil {
 		return nil, status.Error(codes.Unknown, "failed to select from ToDo-> "+err.Error())
@@ -115,7 +115,7 @@ func (s *toDoServiceServer) Read(ctx context.Context, req *v1.ReadRequest) (*v1.
 	// get ToDo data
 	var td v1.ToDo
 	var reminder time.Time
-	if err := rows.Scan(&td.Title, &td.Description, &reminder); err != nil {
+	if err := rows.Scan(&td.Id, &td.Title, &td.Description, &reminder); err != nil {
 		return nil, status.Error(codes.Unknown, "failed to retrieve field values from ToDo row-> "+err.Error())
 	}
 	td.Reminder = &timestamp.Timestamp{Seconds: reminder.Unix(), Nanos: int32(reminder.UnixNano())}
