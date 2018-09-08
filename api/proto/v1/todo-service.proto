@@ -24,7 +24,7 @@ message CreateRequest{
     string api = 1;
 
     // Task entity to add
-    ToDo todo = 2;
+    ToDo toDo = 2;
 }
 
 // Contains data of created todo task
@@ -51,7 +51,7 @@ message ReadResponse{
     string api = 1;
 
     // Task entity read by ID
-    ToDo todo = 2;
+    ToDo toDo = 2;
 }
 
 // Request data to update todo task
@@ -60,7 +60,7 @@ message UpdateRequest{
     string api = 1;
 
     // Task entity to update
-    ToDo todo = 2;
+    ToDo toDo = 2;
 }
 
 // Contains status of update operation
@@ -104,7 +104,7 @@ message ReadAllResponse{
     string api = 1;
 
     // List of all todo tasks
-    repeated ToDo todos = 2;
+    repeated ToDo toDos = 2;
 }
 
 // Service to manage list of todo tasks

@@ -9,6 +9,7 @@
     "cSpell.words": [
         "Checkf",
         "IFNULL",
+        "Nanos",
         "Newf",
         "Protobuf",
         "RPCs",
@@ -34,6 +35,7 @@
         "pgrpc",
         "proto",
         "protoc",
+        "ptypes",
         "reqid",
         "zcfg"
     ]
