@@ -1,0 +1,40 @@
+{
+    "protoc": {
+        "options": [
+            "--proto_path=api/v1/proto",
+            "--proto_path=third_party/googleapis",
+            "--proto_path=third_party/google/protobuf"
+        ]
+    },
+    "cSpell.words": [
+        "Checkf",
+        "IFNULL",
+        "Newf",
+        "Protobuf",
+        "RPCs",
+        "Unkeyed",
+        "adeo",
+        "amsokol",
+        "cloudbuild",
+        "ctxtags",
+        "ecfg",
+        "envconfig",
+        "gcloud",
+        "genproto",
+        "glog",
+        "googleapis",
+        "grpc",
+        "gzipped",
+        "healthz",
+        "kelseyhightower",
+        "lmru",
+        "microservice",
+        "myid",
+        "operationlog",
+        "pgrpc",
+        "proto",
+        "protoc",
+        "reqid",
+        "zcfg"
+    ]
+}

@@ -7,11 +7,14 @@ import "timestamp.proto";
 message ToDo {
     // Unique integer identifier of the todo task
     int64 id = 1;
+
     // Title of the task
     string title = 2;
+
     // Detail description of the todo task
     string description = 3;
-    // Date and time to remind of the todo task
+
+    // Date and time to remind the todo task
     google.protobuf.Timestamp reminder = 4;
 }
 
@@ -24,7 +27,7 @@ message CreateRequest{
     ToDo todo = 2;
 }
 
-// Response that contains data for created todo task
+// Contains data of created todo task
 message CreateResponse{
     // API versioning: it is my best practice to specify version explicitly
     string api = 1;
@@ -33,8 +36,91 @@ message CreateResponse{
     int64 id = 2;
 }
 
+// Request data to read todo task
+message ReadRequest{
+    // API versioning: it is my best practice to specify version explicitly
+    string api = 1;
+
+    // Unique integer identifier of the todo task
+    int64 id = 2;
+}
+
+// Contains todo task data specified in by ID request
+message ReadResponse{
+    // API versioning: it is my best practice to specify version explicitly
+    string api = 1;
+
+    // Task entity read by ID
+    ToDo todo = 2;
+}
+
+// Request data to update todo task
+message UpdateRequest{
+    // API versioning: it is my best practice to specify version explicitly
+    string api = 1;
+
+    // Task entity to update
+    ToDo todo = 2;
+}
+
+// Contains status of update operation
+message UpdateResponse{
+    // API versioning: it is my best practice to specify version explicitly
+    string api = 1;
+
+    // Contains number of entities have beed updated
+    // Equals 1 in case of succesfull update
+    int64 updated = 2;
+}
+
+// Request data to delete todo task
+message DeleteRequest{
+    // API versioning: it is my best practice to specify version explicitly
+    string api = 1;
+
+    // Unique integer identifier of the todo task to delete
+    int64 id = 2;
+}
+
+// Contains status of delete operation
+message DeleteResponse{
+    // API versioning: it is my best practice to specify version explicitly
+    string api = 1;
+
+    // Contains number of entities have beed deleted
+    // Equals 1 in case of succesfull delete
+    int64 deleted = 2;
+}
+
+// Request data to read all todo task
+message ReadAllRequest{
+    // API versioning: it is my best practice to specify version explicitly
+    string api = 1;
+}
+
+// Contains list of all todo tasks
+message ReadAllResponse{
+    // API versioning: it is my best practice to specify version explicitly
+    string api = 1;
+
+    // List of all todo tasks
+    repeated ToDo todos = 2;
+}
+
 // Service to manage list of todo tasks
 service ToDoService {
-    // Create new todo taks
+    // Create new todo task
     rpc Create(CreateRequest) returns (CreateResponse);
+
+    // Read todo task
+    rpc Read(ReadRequest) returns (ReadResponse);
+
+    // Update todo task
+    rpc Update(UpdateRequest) returns (UpdateResponse);
+
+    // Delete todo task
+    rpc Delete(DeleteRequest) returns (DeleteResponse);
+
+    // Read all todo tasks
+    rpc ReadAll(ReadAllRequest) returns (ReadAllResponse);
 }
