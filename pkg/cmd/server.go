@@ -50,7 +50,12 @@ func RunServer() error {
 		return fmt.Errorf("invalid TCP port for gRPC server: '%s'", cfg.GRPCPort)
 	}
 
-	// create MySQL connection pool
+	// add MySQL driver specific parameter to parse date/time
+	if len(cfg.DatastoreMySQLParams) > 0 {
+		cfg.DatastoreMySQLParams += "&"
+	}
+	cfg.DatastoreMySQLParams += "parseTime=true"
+
 	dsn := fmt.Sprintf("%s:%s@tcp(%s)/%s?%s",
 		cfg.DatastoreMySQLUser,
 		cfg.DatastoreMySQLPassword,
