@@ -10,4 +10,5 @@ require (
 	golang.org/x/text v0.3.0 // indirect
 	google.golang.org/genproto v0.0.0-20180831171423-11092d34479b // indirect
 	google.golang.org/grpc v1.14.0
+	gopkg.in/DATA-DOG/go-sqlmock.v1 v1.3.0
 )
