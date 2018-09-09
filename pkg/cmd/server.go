@@ -19,17 +19,15 @@ type Config struct {
 	// gRPC is TCP port to listen by gRPC server
 	GRPCPort string
 
-	// MySQL Datastore parameters section
-	// DatastoreMySQLHost is host of MySQL database
-	DatastoreMySQLHost string
-	// DatastoreMySQLUser is username to connect to MySQL database
-	DatastoreMySQLUser string
-	// DatastoreMySQLPassword password to connect to MySQL database
-	DatastoreMySQLPassword string
-	// DatastoreMySQLSchema is schema of MySQL database
-	DatastoreMySQLSchema string
-	// DatastoreMySQLParams are parameters to connect to MySQL database
-	DatastoreMySQLParams string
+	// DB Datastore parameters section
+	// DatastoreDBHost is host of database
+	DatastoreDBHost string
+	// DatastoreDBUser is username to connect to database
+	DatastoreDBUser string
+	// DatastoreDBPassword password to connect to database
+	DatastoreDBPassword string
+	// DatastoreDBSchema is schema of database
+	DatastoreDBSchema string
 }
 
 // RunServer runs gRPC server and HTTP gateway
@@ -39,11 +37,10 @@ func RunServer() error {
 	// get configuration
 	var cfg Config
 	flag.StringVar(&cfg.GRPCPort, "grpc-port", "", "gRPC port to bind")
-	flag.StringVar(&cfg.DatastoreMySQLHost, "mysql-host", "", "MySQL database host")
-	flag.StringVar(&cfg.DatastoreMySQLUser, "mysql-user", "", "MySQL database user")
-	flag.StringVar(&cfg.DatastoreMySQLPassword, "mysql-password", "", "MySQL database password")
-	flag.StringVar(&cfg.DatastoreMySQLSchema, "mysql-schema", "", "MySQL database schema")
-	flag.StringVar(&cfg.DatastoreMySQLParams, "mysql-params", "", "MySQL database connection parameters")
+	flag.StringVar(&cfg.DatastoreDBHost, "db-host", "", "Database host")
+	flag.StringVar(&cfg.DatastoreDBUser, "db-user", "", "Database user")
+	flag.StringVar(&cfg.DatastoreDBPassword, "db-password", "", "Database password")
+	flag.StringVar(&cfg.DatastoreDBSchema, "db-schema", "", "Database schema")
 	flag.Parse()
 
 	if len(cfg.GRPCPort) == 0 {
@@ -51,17 +48,15 @@ func RunServer() error {
 	}
 
 	// add MySQL driver specific parameter to parse date/time
-	if len(cfg.DatastoreMySQLParams) > 0 {
-		cfg.DatastoreMySQLParams += "&"
-	}
-	cfg.DatastoreMySQLParams += "parseTime=true"
+	// Drop it for another database
+	param := "parseTime=true"
 
 	dsn := fmt.Sprintf("%s:%s@tcp(%s)/%s?%s",
-		cfg.DatastoreMySQLUser,
-		cfg.DatastoreMySQLPassword,
-		cfg.DatastoreMySQLHost,
-		cfg.DatastoreMySQLSchema,
-		cfg.DatastoreMySQLParams)
+		cfg.DatastoreDBUser,
+		cfg.DatastoreDBPassword,
+		cfg.DatastoreDBHost,
+		cfg.DatastoreDBSchema,
+		param)
 	db, err := sql.Open("mysql", dsn)
 	if err != nil {
 		return fmt.Errorf("failed to open database: %v", err)
