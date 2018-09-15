@@ -1,7 +1,7 @@
 syntax = "proto3";
 package v1;
 
-import "timestamp.proto";
+import "google/protobuf/timestamp.proto";
 
 // Taks we have to do
 message ToDo {
