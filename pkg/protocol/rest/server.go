@@ -13,6 +13,7 @@ import (
 
 	"github.com/amsokol/go-grpc-http-rest-microservice-tutorial/pkg/api/v1"
 	"github.com/amsokol/go-grpc-http-rest-microservice-tutorial/pkg/logger"
+	"github.com/amsokol/go-grpc-http-rest-microservice-tutorial/pkg/protocol/rest/middleware"
 )
 
 // RunServer runs HTTP/REST gateway
@@ -27,8 +28,10 @@ func RunServer(ctx context.Context, grpcPort, httpPort string) error {
 	}
 
 	srv := &http.Server{
-		Addr:    ":" + httpPort,
-		Handler: mux,
+		Addr: ":" + httpPort,
+		// add handler with middleware
+		Handler: middleware.AddRequestID(
+			middleware.AddLogger(logger.Log, mux)),
 	}
 
 	// graceful shutdown
