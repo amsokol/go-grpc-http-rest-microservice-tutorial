@@ -5,7 +5,6 @@ import (
 	"database/sql"
 	"flag"
 	"fmt"
-	"log"
 
 	// mysql driver
 	_ "github.com/go-sql-driver/mysql"
@@ -74,8 +73,7 @@ func RunServer() error {
 
 	// run HTTP gateway
 	go func() {
-		err := rest.RunServer(ctx, cfg.GRPCPort, cfg.HTTPPort)
-		log.Fatalf("failed to start HTTP/REST gateway: %v", err)
+		_ = rest.RunServer(ctx, cfg.GRPCPort, cfg.HTTPPort)
 	}()
 
 	return grpc.RunServer(ctx, v1API, cfg.GRPCPort)
