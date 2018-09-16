@@ -10,6 +10,7 @@ import (
 
 	"github.com/amsokol/go-grpc-http-rest-microservice-tutorial/pkg/api/v1"
 	"github.com/amsokol/go-grpc-http-rest-microservice-tutorial/pkg/logger"
+	"github.com/amsokol/go-grpc-http-rest-microservice-tutorial/pkg/protocol/grpc/middleware"
 )
 
 // RunServer runs gRPC service to publish ToDo service
@@ -19,8 +20,14 @@ func RunServer(ctx context.Context, v1API v1.ToDoServiceServer, port string) err
 		return err
 	}
 
+	// gRPC server statup options
+	opts := []grpc.ServerOption{}
+
+	// add middleware
+	opts = middleware.AddLogging(logger.Log, opts)
+
 	// register service
-	server := grpc.NewServer()
+	server := grpc.NewServer(opts...)
 	v1.RegisterToDoServiceServer(server, v1API)
 
 	// graceful shutdown
