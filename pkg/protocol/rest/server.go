@@ -22,7 +22,7 @@ func RunServer(ctx context.Context, grpcPort, httpPort string) error {
 	mux := runtime.NewServeMux()
 	opts := []grpc.DialOption{grpc.WithInsecure()}
 	if err := v1.RegisterToDoServiceHandlerFromEndpoint(ctx, mux, "localhost:"+grpcPort, opts); err != nil {
-		return err
+		log.Fatalf("failed to start HTTP gateway: %v", err)
 	}
 
 	srv := &http.Server{
