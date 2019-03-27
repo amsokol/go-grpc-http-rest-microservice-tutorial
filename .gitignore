@@ -11,3 +11,6 @@
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 /.vscode/launch.json
+
+# in-tree build products
+*.pb.go
